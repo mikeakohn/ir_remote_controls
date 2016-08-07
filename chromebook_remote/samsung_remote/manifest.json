@@ -1,0 +1,10 @@
+{
+  "name": "Samsung Remote",
+  "description": "Change channels with Chrome.",
+  "version": "0.2",
+  "manifest_version": 2,
+  "app": { "background": { "scripts": [ "js/background.js" ] } },
+  "icons": { "16": "icons/icon_16.png", "128": "icons/icon_128.png" },
+  "permissions": [ "serial" ]
+}
+
