@@ -1,0 +1,4 @@
+
+
+sudo inputattach --daemon --baud 9600 --always -zhen /dev/ttyUSB0
+
