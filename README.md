@@ -11,3 +11,5 @@
 * chromebook_remote - Circuit, MSP430 firmware, and Chromebook app for controlling a Samsung TV with a Chromebook.<br>
 [http://www.mikekohn.net/micro/chromebook_remote_control.php](http://www.mikekohn.net/micro/chromebook_remote_control.php)
 
+* tv_remotes - Source code for sending remote control data to several different kinds of TV's.<br>
+[http://www.mikekohn.net/micro/remote_control.php](http://www.mikekohn.net/micro/remote_control.php)
