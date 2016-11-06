@@ -71,7 +71,7 @@ start:
   ;; P1.6 = Motor Right
   ;; P2.6 = Debug LED
   mov.b #0x60, &P1DIR
-  mov.b #0x40, &P1OUT
+  mov.b #0x00, &P1OUT
   mov.b #0x40, &P2DIR
   mov.b #0x00, &P2OUT
   mov.b #0x00, &P2SEL
