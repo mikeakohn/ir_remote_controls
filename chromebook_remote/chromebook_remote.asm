@@ -32,7 +32,7 @@ DATA equ RAM+32
 ; short  = 0.56ms = 44 cycles
 ; long   = 1.69ms = 132 cycles
 
-  .org 0xc000
+.org 0xc000
 start:
   ;; Turn off watchdog
   mov.w #(WDTPW|WDTHOLD), &WDTCTL
@@ -47,23 +47,6 @@ start:
   mov.b #DCO_4, &DCOCTL
   mov.b #RSEL_15, &BCSCTL1
   mov.b #0, &BCSCTL2
-
-.if 0
-  ;; Set MCLK to 16 MHz external crystal
-  bic.w #OSCOFF, SR
-  bis.b #XTS, &BCSCTL1
-  mov.b #LFXT1S_3, &BCSCTL3
-  ;mov.b #LFXT1S_3|XCAP_1, &BCSCTL3
-test_osc:
-  bic.b #OFIFG, &IFG1
-  mov.w #0x00ff, r15
-dec_again:
-  dec r15
-  jnz dec_again
-  bit.b #(OFIFG), &IFG1
-  jnz test_osc
-  mov.b #(SELM_3|SELS), &BCSCTL2
-.endif
 
   ;; Set up output pins
   ;; P1.1 = RX
@@ -222,10 +205,14 @@ exit_interrupt:
   reti 
 
 numbers_table:
+  ;;      0,      1,      2,      3       4
   dw 0x8877, 0x20df, 0xa05f, 0x609f, 0x10ef
+  ;;      5       6       7       8       9
   dw 0x906f, 0x50af, 0x30cf, 0xb04f, 0x708f
+  ;;      -   power
+  dw 0xc43b, 0x40bf
 
-  org 0xffe8
+.org 0xffe8
 vectors:
   dw 0
   dw 0
