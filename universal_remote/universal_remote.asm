@@ -138,9 +138,22 @@ start:
   mov.w #7547, &GAP_LENGTH
   mov.w #42, &DIVIDER
 
-  call #send_params
+  ;call #send_params
 
 main:
+  bit.b #UCA0RXIFG, &IFG2
+  jz main
+  mov.b &UCA0RXBUF, r14
+  mov.b r14, r15
+  call #uart_send_char
+  mov.b #'\r', r15
+  call #uart_send_char
+  mov.b #'\n', r15
+  call #uart_send_char
+  cmp.b #'p', r14
+  jnz not_p
+  call #send_params
+not_p:
   jmp main
 
 delay:

@@ -89,6 +89,13 @@ send_hex_wait_tx2:
   mov.b @r14, &UCA0TXBUF
   ret
 
+; uart_send_char(r15)
+uart_send_char:
+  bit.b #UCA0TXIFG, &IFG2
+  jz uart_send_char
+  mov.b r15, &UCA0TXBUF
+  ret
+
 .align 16
 hex_table:
 .db "0123456789abcdef"
