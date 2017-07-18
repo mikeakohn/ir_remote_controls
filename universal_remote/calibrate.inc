@@ -1,3 +1,12 @@
+;; universal_remote
+;;
+;; Copyright 2017 - By Michael Kohn
+;; http://www.mikekohn.net/
+;; mike@mikekohn.net
+;;
+;; Remote control configurable over UART.
+
+.list
 
 calibrate_baud_rate:
   call #wait_for_sample
