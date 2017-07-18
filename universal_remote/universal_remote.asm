@@ -15,6 +15,12 @@ CPU_FREQ_HI equ RAM+4
 DCO_COUNT equ RAM+6
 BAUD_DIV equ RAM+8
 TIMER_DIV equ RAM+10
+HEADER_ON equ RAM+12
+HEADER_OFF equ RAM+14
+ONE equ RAM+16
+ZERO equ RAM+18
+GAP_LENGTH equ RAM+20
+DIVIDER equ RAM+22
 
 ;  r4 = data pointer
 ;  r5 = sent bit count
@@ -37,12 +43,12 @@ TIMER_DIV equ RAM+10
 ; one      = 4.5ms = 340 interrupts
 ; zero     = 2.25ms = 170 interrupts
 
-HEADER_ON equ 680
-HEADER_OFF equ 340
-DIVIDER equ 42
-ONE equ 340
-ZERO equ 170
-GAP_LENGTH equ 7547
+;HEADER_ON equ 680
+;HEADER_OFF equ 340
+;DIVIDER equ 42
+;ONE equ 340
+;ZERO equ 170
+;GAP_LENGTH equ 7547
 DELAY_30MS equ 2264
 DELAY_500MS equ 38461
 
@@ -115,11 +121,27 @@ start:
   ;; Turn of LED's until stuff happens
   mov.b #0x00, &P2OUT
 
+  ;; Setup UART
+  mov.b #UCSSEL_2|UCSWRST, &UCA0CTL1
+  mov.b #0, &UCA0CTL0
+  mov.b &BAUD_DIV, &UCA0BR0
+  mov.b &BAUD_DIV+1, &UCA0BR1
+  bic.b #UCSWRST, &UCA0CTL1
+
   mov.b #0, r10
+
+  ;; Default paramters
+  mov.w #680, &HEADER_ON
+  mov.w #340, &HEADER_OFF
+  mov.w #340, &ONE
+  mov.w #170, &ZERO
+  mov.w #7547, &GAP_LENGTH
+  mov.w #42, &DIVIDER
+
+  call #send_params
 
 main:
   jmp main
-
 
 delay:
   mov.w #0xffff, r15
@@ -130,6 +152,7 @@ delay_loop:
 
 .include "calibrate.inc"
 .include "send_ir.inc"
+.include "send_params.inc"
 
 // DCO based interrupt
 timer_interrupt_a:
