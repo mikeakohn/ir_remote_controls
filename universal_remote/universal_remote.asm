@@ -138,7 +138,7 @@ start:
   mov.w #7547, &GAP_LENGTH
   mov.w #42, &DIVIDER
 
-  ;call #send_params
+  ;call #send_settings
 
 main:
   bit.b #UCA0RXIFG, &IFG2
@@ -152,7 +152,7 @@ main:
   call #uart_send_char
   cmp.b #'p', r14
   jnz not_p
-  call #send_params
+  call #send_settings
 not_p:
   jmp main
 
@@ -165,7 +165,7 @@ delay_loop:
 
 .include "calibrate.inc"
 .include "send_ir.inc"
-.include "send_params.inc"
+.include "send_settings.inc"
 
 // DCO based interrupt
 timer_interrupt_a:
