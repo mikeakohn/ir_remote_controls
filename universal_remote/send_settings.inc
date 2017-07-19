@@ -37,6 +37,10 @@ send_settings:
   mov.w &DIVIDER, r14
   call #send_single_param
 
+  mov.w #bits_const, r15
+  mov.w &BITS, r14
+  call #send_single_param
+
   mov.w #baud_div_const, r15
   mov.w &BAUD_DIV, r14
   call #send_single_param
@@ -135,6 +139,10 @@ gap_length_const:
 .align 16
 divider_const:
 .asciiz "  'divider': 0x"
+
+.align 16
+bits_const:
+.asciiz "  'bits': 0x"
 
 .align 16
 baud_div_const:

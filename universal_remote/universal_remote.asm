@@ -21,6 +21,9 @@ ONE equ RAM+16
 ZERO equ RAM+18
 GAP_LENGTH equ RAM+20
 DIVIDER equ RAM+22
+BITS equ RAM+24
+
+DATA equ RAM+32
 
 ;  r4 = data pointer
 ;  r5 = sent bit count
@@ -88,7 +91,7 @@ start:
   mov.b #0x06, &P2OUT
 
   ;; Set MCLK to 4 MHz with DCO
-  mov.b #DCO_2, &DCOCTL
+  mov.b #DCO_4, &DCOCTL
   mov.b #RSEL_11, &BCSCTL1
   mov.b #0, &BCSCTL2
 
@@ -137,6 +140,7 @@ start:
   mov.w #170, &ZERO
   mov.w #7547, &GAP_LENGTH
   mov.w #42, &DIVIDER
+  mov.w #32, &BITS
 
   ;call #send_settings
 
@@ -150,10 +154,11 @@ main:
   call #uart_send_char
   mov.b #'\n', r15
   call #uart_send_char
-  cmp.b #'p', r14
-  jnz not_p
-  call #send_settings
-not_p:
+  call #uart_read
+  ;cmp.b #'p', r14
+  ;jnz not_p
+  ;call #send_settings
+;not_p:
   jmp main
 
 delay:
@@ -166,6 +171,7 @@ delay_loop:
 .include "calibrate.inc"
 .include "send_ir.inc"
 .include "send_settings.inc"
+.include "uart_read.inc"
 
 // DCO based interrupt
 timer_interrupt_a:
