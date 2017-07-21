@@ -49,6 +49,23 @@ send_settings:
   mov.w &TIMER_DIV, r14
   call #send_single_param
 
+  mov.w #cpu_freq_const, r15
+  call #send_string
+  mov.w &CPU_FREQ_HI, r15
+  mov.w r15, r13
+  swpb r15
+  call #send_hex
+  mov.w r13, r15
+  call #send_hex
+  mov.w &CPU_FREQ_LO, r15
+  mov.w r15, r13
+  swpb r15
+  call #send_hex
+  mov.w r13, r15
+  call #send_hex
+  mov.w #eol_const, r15
+  call #send_string
+
   mov.w #close_json, r15
   call #send_string
 
@@ -58,6 +75,7 @@ send_settings:
 
 send_single_param:
   call #send_string
+send_single_param_hex:
   mov.w r14, r15
   mov.w r14, r13
   swpb r15
@@ -151,6 +169,10 @@ baud_div_const:
 .align 16
 timer_div_const:
 .asciiz "  'timer_div': 0x"
+
+.align 16
+cpu_freq_const:
+.asciiz "  'cpu_freq': 0x"
 
 .align 16
 eol_const:

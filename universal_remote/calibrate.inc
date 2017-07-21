@@ -23,7 +23,6 @@ mul_512:
   dec r13
   jnz mul_512
 
-
   ;; r15:r14 now contains cpu frequency
   mov.w r14, &CPU_FREQ_LO
   mov.w r15, &CPU_FREQ_HI
