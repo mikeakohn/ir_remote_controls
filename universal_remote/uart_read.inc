@@ -55,6 +55,13 @@ not_gap_length:
   ret
 not_bits:
 
+  cmp.b #'c', r14
+  jnz not_code
+  call #read_code
+  call #send_command
+  ret
+not_code:
+
   ret
 
 read_data:
@@ -79,7 +86,6 @@ read_data_next:
   rla.w r15
   bis.w r14, r15
   jmp read_data_next
-
 read_data_not_number:
   cmp.w #'a', r14
   jlo read_data_not_hex
@@ -95,5 +101,53 @@ read_data_not_number:
 read_data_not_hex:
   jmp read_data_next
 read_data_done:
+  ret
+
+read_code:
+  mov.w #COMMAND, r13
+  mov.w #0, r15
+read_code_next:
+  bit.b #UCA0RXIFG, &IFG2
+  jz read_code_next
+  mov.b &UCA0RXBUF, r14
+  mov.b r14, &UCA0TXBUF
+  cmp.w #'\r', r14
+  jeq read_code_done
+  cmp.w #'\n', r14
+  jeq read_code_done
+  cmp.w #'0', r14
+  jlo read_code_not_number
+  cmp.w #('9'+1), r14
+  jhs read_code_not_number
+  sub.w #'0', r14
+  rla.b @r13
+  rla.b @r13
+  rla.b @r13
+  rla.b @r13
+  bis.b r14, @r13
+  add.w #1, r15
+  bit.w #1, r15
+  jnz read_code_next
+  add.w #1, r13
+  jmp read_code_next
+read_code_not_number:
+  cmp.w #'a', r14
+  jlo read_code_not_hex
+  cmp.w #'g', r14
+  jhs read_code_not_hex
+  sub.w #('a'-10), r14
+  rla.b @r13
+  rla.b @r13
+  rla.b @r13
+  rla.b @r13
+  bis.b r14, @r13
+  add.w #1, r15
+  bit.w #1, r15
+  jnz read_code_next
+  add.w #1, r13
+  jmp read_code_next
+read_code_not_hex:
+  jmp read_code_next
+read_code_done:
   ret
 

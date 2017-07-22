@@ -23,12 +23,12 @@ GAP_LENGTH equ RAM+20
 DIVIDER equ RAM+22
 BITS equ RAM+24
 
-DATA equ RAM+32
+COMMAND equ RAM+32
 
 ;  r4 = data pointer
 ;  r5 = sent bit count
 ;  r6 = byte coming in from UART
-;  r7 =
+;  r7 = pointer to data
 ;  r8 =
 ;  r9 = interrupt count
 ; r10 = interrupt toggle value

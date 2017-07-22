@@ -15,6 +15,7 @@ Commands
 * o[hex]: Set the length of a ONE (and space)
 * z[hex]: Set the length of a ZERO
 * b[hex]: Set the number of bits for a command
+* c[hex]: Send IR code
 
 Settings JSON
 -------------
