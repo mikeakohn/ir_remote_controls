@@ -33,8 +33,8 @@ send_settings:
   mov.w &GAP_LENGTH, r14
   call #send_single_param
 
-  mov.w #divider_const, r15
-  mov.w &DIVIDER, r14
+  mov.w #space_const, r15
+  mov.w &SPACE, r14
   call #send_single_param
 
   mov.w #bits_const, r15
@@ -155,8 +155,8 @@ gap_length_const:
 .asciiz "  'gap_length': 0x"
 
 .align 16
-divider_const:
-.asciiz "  'divider': 0x"
+space_const:
+.asciiz "  'space': 0x"
 
 .align 16
 bits_const:

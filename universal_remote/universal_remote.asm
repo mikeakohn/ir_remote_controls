@@ -20,7 +20,7 @@ HEADER_OFF equ RAM+14
 ONE equ RAM+16
 ZERO equ RAM+18
 GAP_LENGTH equ RAM+20
-DIVIDER equ RAM+22
+SPACE equ RAM+22
 BITS equ RAM+24
 
 COMMAND equ RAM+32
@@ -41,31 +41,6 @@ COMMAND equ RAM+32
 ; 4,000,000 / (38000 * 2) = 52.6
 ; 76.0kHz = 13.1 microseconds
 ;
-; header = 9ms / 4.5ms  = 680 interrupts on / 340 off
-; divider  = 0.56ms = 42 interrupts
-; one      = 4.5ms = 340 interrupts
-; zero     = 2.25ms = 170 interrupts
-
-;HEADER_ON equ 680
-;HEADER_OFF equ 340
-;DIVIDER equ 42
-;ONE equ 340
-;ZERO equ 170
-;GAP_LENGTH equ 7547
-DELAY_30MS equ 2264
-DELAY_500MS equ 38461
-
-KEY_1 equ 0x800f
-KEY_2 equ 0x4007
-KEY_3 equ 0xc00b
-KEY_4 equ 0x2003
-KEY_5 equ 0xa00d
-KEY_6 equ 0x6005
-KEY_7 equ 0xe009
-KEY_8 equ 0x1001
-KEY_9 equ 0x900e
-KEY_0 equ 0x0000
-
 .org 0xc000
 start:
   ;; Turn off watchdog
@@ -138,7 +113,7 @@ start:
   mov.w #346, &HEADER_OFF
   mov.w #125, &ONE
   mov.w #46, &ZERO
-  mov.w #46, &DIVIDER
+  mov.w #46, &SPACE
   mov.w #7547, &GAP_LENGTH
   mov.w #32, &BITS
 

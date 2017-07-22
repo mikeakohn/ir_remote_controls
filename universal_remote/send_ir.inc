@@ -42,7 +42,7 @@ dont_inc_pointer:
   clr.w r9
   mov.b #1, r10
 wait_bit_on:
-  cmp.w &DIVIDER, r9
+  cmp.w &SPACE, r9
   jne wait_bit_on
   mov.b #0, r10
   bic.b #1, &P1OUT
@@ -72,7 +72,7 @@ wait_bit_off:
   clr.w r9
   mov.b #1, r10
 wait_ptrail:
-  cmp.w &DIVIDER, r9
+  cmp.w &SPACE, r9
   jne wait_ptrail
   mov.b #0, r10
   bic.b #1, &P1OUT

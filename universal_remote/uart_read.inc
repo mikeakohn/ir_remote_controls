@@ -27,6 +27,13 @@ not_zero:
   ret
 not_one:
 
+  cmp.b #'s', r14
+  jnz not_space
+  call #read_data
+  mov.w r15, &SPACE
+  ret
+not_space:
+
   cmp.b #'n', r14
   jnz not_header_on
   call #read_data

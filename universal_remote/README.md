@@ -14,6 +14,7 @@ Commands
 * f[hex]: Set the length of HEADER_OFF
 * o[hex]: Set the length of a ONE (and space)
 * z[hex]: Set the length of a ZERO
+* s[hex]: Set the length of a SPACE
 * b[hex]: Set the number of bits for a command
 * c[hex]: Send IR code
 
