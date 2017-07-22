@@ -134,12 +134,12 @@ start:
   mov.b #0, r10
 
   ;; Default paramters
-  mov.w #680, &HEADER_ON
-  mov.w #340, &HEADER_OFF
-  mov.w #340, &ONE
-  mov.w #170, &ZERO
+  mov.w #346, &HEADER_ON
+  mov.w #346, &HEADER_OFF
+  mov.w #125, &ONE
+  mov.w #46, &ZERO
+  mov.w #46, &DIVIDER
   mov.w #7547, &GAP_LENGTH
-  mov.w #42, &DIVIDER
   mov.w #32, &BITS
 
   ;call #send_settings
