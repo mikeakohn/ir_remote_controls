@@ -1,6 +1,6 @@
 ;; Syma Motor Control
 ;;
-;; Copyright 2016 - By Michael Kohn
+;; Copyright 2016-2019 - By Michael Kohn
 ;; http://www.mikekohn.net/
 ;; mike@mikekohn.net
 ;;
@@ -38,7 +38,7 @@ WATCHDOG equ RAM+16
 
 ;  r4 = state (0=idle, 1=header_on, 2=header_off, 3=first half, 4=second)
 ;  r5 = interupt count
-;  r6 = pointer to next byte coming in 
+;  r6 = pointer to next byte coming in
 ;  r7 = current byte
 ;  r8 = bit count
 ;  r9 = temp in main
@@ -60,9 +60,9 @@ start:
   ;; Set up stack pointer
   mov.w #0x0280, SP
 
-  ;; Set MCLK to 16 MHz with DCO 
-  mov.b #DCO_7, &DCOCTL
-  mov.b #RSEL_14, &BCSCTL1
+  ;; Set MCLK to 8 MHz with DCO
+  mov.b #DCO_5, &DCOCTL
+  mov.b #RSEL_13, &BCSCTL1
   mov.b #0, &BCSCTL2
 
   ;; Set up output pins
@@ -77,7 +77,7 @@ start:
   mov.b #0x00, &P2SEL
 
   ;; Set up Timer
-  mov.w #210, &TACCR0
+  mov.w #105, &TACCR0
   mov.w #(TASSEL_2|MC_1), &TACTL ; SMCLK, DIV1, COUNT to TACCR0
   mov.w #CCIE, &TACCTL0
   mov.w #0, &TACCTL1
@@ -169,7 +169,10 @@ not_a_zero:
   cmp.w #RAM+4, r6
   jne receive_next_byte
 
+  ;; Set both motors to the throttle speed (divided by 8)
+  ;; value should be somewhere between 0 and 15
   mov.b &THROTTLE, r7
+  bic.w #0xff80, r7
   rra.w r7
   rra.w r7
   rra.w r7
@@ -263,7 +266,7 @@ ignore_left_motor:
   bic.b #0x40, &P1OUT
 ignore_right_motor:
 
-  reti 
+  reti
 
 speed:
   dw     0,   300,   400,   500
