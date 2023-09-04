@@ -1,5 +1,5 @@
 
-PROGRAMS= listener.hex \
+PROGRAMS=listener.hex
 
 INCLUDE=../../naken_asm/include/msp430
 
